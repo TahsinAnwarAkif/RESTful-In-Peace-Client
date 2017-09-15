@@ -1,0 +1,257 @@
+<form [formGroup] = "fullForm">
+    <h2 align = "middle">Patients</h2>
+    <button (click) = "getPatients()" style="float: center;">Get All Patients</button>
+    <style type="text/css">
+        .tg  {border-collapse:collapse;border-spacing:0;}
+        .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+        .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+        .tg .tg-s0wq{background-color:#ffccc9;color:#330001}
+        .tg .tg-xu9l{background-color:#ffccc9;color:#000000}
+        .tg .tg-gvwu{background-color:#ffccc9;color:#000000;vertical-align:top}
+        .tg .tg-i6eq{background-color:#ffccc9;vertical-align:top}
+        .tg .tg-e3eb{background-color:#ffccc9;color:#330001;vertical-align:top}
+        .tg .tg-yw4l{vertical-align:top}
+    </style>
+    <table class="tg" align="center">
+        <br><br><br>
+ 
+        <div formArrayName="patientId" >
+            <td *ngFor="let patient of fullForm.get('patientId').controls; index as i;">
+                <tr><input type = "text" placeholder="patientId" [formControlName] ="i" ></tr> 
+            </td>
+        </div>
+        
+        <div formArrayName="patientName">
+            <td *ngFor="let patient of fullForm.get('patientName').controls; index as i">
+                <tr  allign ="right"><span><input type = "text" placeholder="patientName" [formControlName] ="i" ></span></tr> 
+            </td>
+        </div>
+        
+        <div formArrayName="patientAddress">
+            <td *ngFor="let patient of fullForm.get('patientAddress').controls; index as i">
+                <tr><span><input type = "text" placeholder="Address" [formControlName] ="i" ></span></tr> 
+            </td>
+        </div>
+        <div formArrayName="patientPhone">
+            <td *ngFor="let patient of fullForm.get('patientPhone').controls; index as i">
+                <tr><span><input type = "text" placeholder="Phone" [formControlName] ="i" ></span></tr> 
+            </td>
+        </div>
+        <div formArrayName="patientEmail">
+            <td *ngFor="let patient of fullForm.get('patientEmail').controls; index as i">
+                <tr><span><input type = "text" placeholder="Email" [formControlName] ="i" ></span></tr> 
+            </td>
+        </div>
+        
+        <div formArrayName="patientDoctorId">
+            <td *ngFor="let patient of fullForm.get('patientDoctorId').controls; index as i">
+                <tr><span><input type = "text" placeholder="Assigned Doctor ID" [formControlName] ="i" ></span></tr> 
+            </td>
+        </div>
+    </table>
+    
+    <button (click) = "saveAllPatients()">Save All Patients</button>
+    <h2 allign = "middle">{{Message}}</h2>
+    <br><br><br>
+        </form>
+
+
+
+<h2>Get A Single Patient</h2>
+
+    <form [formGroup] = "singleForm" >
+        <input  type="text" placeholder="Patient ID" autocomplete="off" formControlName = "singleId">
+        <br><br>
+
+        <button [disabled] ="!singleForm.value.singleId"  (click) = "getPatient(singleForm.value)">Get Patient</button>
+        <button [disabled] ="!singleForm.value.singleId" (click) = "deletePatient(singleForm.value)">Delete Patient</button>
+    </form>
+<br><br><br>
+
+
+
+
+<h2 align = "middle">Patient</h2>
+<style type="text/css">
+    .tg  {border-collapse:collapse;border-spacing:0;}
+    .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+    .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+    .tg .tg-s0wq{background-color:#ffccc9;color:#330001}
+    .tg .tg-xu9l{background-color:#ffccc9;color:#000000}
+    .tg .tg-gvwu{background-color:#ffccc9;color:#000000;vertical-align:top}
+    .tg .tg-i6eq{background-color:#ffccc9;vertical-align:top}
+    .tg .tg-e3eb{background-color:#ffccc9;color:#330001;vertical-align:top}
+    .tg .tg-yw4l{vertical-align:top}
+</style>
+<table class="tg" align="center">
+    <br><br><br>
+    <tr>
+        <th class="tg-xu9l">ID</th>
+        <th class="tg-s0wq">Name</th>
+        <th class="tg-gvwu">Address</th>
+        <th class="tg-i6eq">Phone</th>
+        <th class="tg-i6eq">Email</th>
+        <th class="tg-i6eq">Assigned Doctor</th>
+    </tr>
+    <tr *ngIf="singlePatient" >
+        <td><span>{{singlePatient.id}}</span></td>
+        <td><span>{{singlePatient.name}} </span></td>
+        <td><span>{{singlePatient.address}}</span></td>
+        <td><span>{{singlePatient.phone}} </span></td>
+        <td><span>{{singlePatient.email}}</span></td>
+        <td><span>{{singlePatient.doctor.id}}</span></td>
+    </tr>	
+</table>
+
+<br><br><br>
+
+
+<h2>Get Doctor's Patients</h2>
+<form [formGroup] = "singleForm2" >
+        <input  type="text" placeholder="Doctor ID" autocomplete="off" formControlName = "doctorId">
+        <br><br>
+        <button [disabled] ="!singleForm2.value.doctorId"  (click) = "getDoctorsPatients(singleForm2.value)">Get  Doctor's Patients</button>
+<br><br>
+
+
+<h2 align = "middle">Doctor's Patients</h2>
+<style type="text/css">
+    .tg  {border-collapse:collapse;border-spacing:0;}
+    .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+    .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+    .tg .tg-s0wq{background-color:#ffccc9;color:#330001}
+    .tg .tg-xu9l{background-color:#ffccc9;color:#000000}
+    .tg .tg-gvwu{background-color:#ffccc9;color:#000000;vertical-align:top}
+    .tg .tg-i6eq{background-color:#ffccc9;vertical-align:top}
+    .tg .tg-e3eb{background-color:#ffccc9;color:#330001;vertical-align:top}
+    .tg .tg-yw4l{vertical-align:top}
+</style>
+<table class="tg" align="center">
+    <br><br><br>
+    <tr>
+        <th class="tg-xu9l">ID</th>
+        <th class="tg-s0wq">Name</th>
+        <th class="tg-gvwu">Address</th>
+        <th class="tg-i6eq">Phone</th>
+        <th class="tg-i6eq">Email</th>
+        <th class="tg-i6eq">Assigned Doctor</th>
+    </tr>
+    <tr *ngFor="let row of doctorsPatients ">
+        <ng-container *ngIf= "doctorsPatients">
+            <td><span>{{row.id}}</span></td>
+            <td><span>{{row.name}} </span></td>
+            <td><span>{{row.address}}</span></td>
+            <td><span>{{row.phone}} </span></td>
+            <td><span>{{row.email}}</span></td>
+            <td><span>{{row.doctor.id}}</span></td>
+        </ng-container> 
+    </tr>	
+</table>
+<br><br><br>
+
+    <h2>Get  A Doctor's Single Patient</h2>
+        <input  type="text" placeholder="Patient ID" autocomplete="off" formControlName = "doctorsPatientId">
+        <br><br>
+
+        <button [disabled] ="!singleForm2.value.doctorsPatientId"  (click) = "getDoctorsPatient(singleForm2.value)">Get Patient</button>
+        <button [disabled] ="!singleForm2.value.doctorsPatientId" (click) = "deleteDoctorsPatient(singleForm2.value)">Delete Patient</button>
+    </form>
+<br><br><br>
+
+
+<h2 align = "middle">Doctor's Single Patient</h2>
+<style type="text/css">
+    .tg  {border-collapse:collapse;border-spacing:0;}
+    .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+    .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+    .tg .tg-s0wq{background-color:#ffccc9;color:#330001}
+    .tg .tg-xu9l{background-color:#ffccc9;color:#000000}
+    .tg .tg-gvwu{background-color:#ffccc9;color:#000000;vertical-align:top}
+    .tg .tg-i6eq{background-color:#ffccc9;vertical-align:top}
+    .tg .tg-e3eb{background-color:#ffccc9;color:#330001;vertical-align:top}
+    .tg .tg-yw4l{vertical-align:top}
+</style>
+<table class="tg" align="center">
+    <br><br><br>
+    <tr>
+        <th class="tg-xu9l">ID</th>
+        <th class="tg-s0wq">Name</th>
+        <th class="tg-gvwu">Address</th>
+        <th class="tg-i6eq">Phone</th>
+        <th class="tg-i6eq">Email</th>
+        <th class="tg-i6eq">Assigned Doctor</th>
+    </tr>
+    <tr *ngIf="singlePatient2" >
+        <td><span>{{singlePatient2.id}}</span></td>
+        <td><span>{{singlePatient2.name}} </span></td>
+        <td><span>{{singlePatient2.address}}</span></td>
+        <td><span>{{singlePatient2.phone}} </span></td>
+        <td><span>{{singlePatient2.email}}</span></td>
+        <td><span>{{singlePatient2.doctor.id}}</span></td>
+    </tr>	
+</table>
+
+
+<br><br><br>
+
+<form [formGroup] = "form" >
+    <h2>Add/Update Patient</h2>
+    <input  type="text"  placeholder="Patient ID" autocomplete="off" formControlName = "id">
+    <br><br>
+    <input  type="text"  placeholder="Patient Name" autocomplete="off" formControlName = "name" >
+    <br><br>
+    <input  type="text"  placeholder="Address" autocomplete="off" formControlName = "address">
+    <br><br>
+    <input  type="text" placeholder="Phone" autocomplete="off" formControlName = "phone">
+    <br><br>
+    <input  type="text"  placeholder="Email" autocomplete="off" formControlName = "email">
+    <br><br>
+    <input  type="text"  placeholder="Assigned Doctor ID" autocomplete="off" formControlName = "patientDoctorId">
+    <br><br>
+    
+    
+    <button [disabled]= "!(form.value.id && form.value.name  && form.value.address
+                         && form.value.phone  && form.value.email  
+                         && form.value.patientDoctorId)" 
+            (click) = "addAndUpdatePatient(form.value)">Add/Update Patient</button>
+    
+    
+    
+   <button [disabled]= "!(form.value.id && form.value.name  && form.value.address
+                         && form.value.phone  && form.value.email  
+                         && form.value.patientDoctorId)" 
+            (click) = "addAndUpdateDoctorsPatient(form.value)">Add/Update Doctor's Patient</button>
+    
+
+</form>
+
+<br><br><br>
+<a routerLink = "/">Go To Home</a>
+<!--
+<h2>Add/Update Patient</h2>
+
+<input  type="text"  [(ngModel)]="newPatientId" placeholder="Patient ID" autocomplete="off">
+<br><br>
+<input  type="text"  [(ngModel)]="newPatientName" placeholder="Patient Name" autocomplete="off">
+<br><br>
+
+<input  type="text"  [(ngModel)]="newPatientAddress" placeholder="Patient Address" autocomplete="off">
+<br><br>
+<input  type="text"  [(ngModel)]="newPatientPhone" placeholder=" Patient Phone" autocomplete="off">
+<br><br>
+<input  type="text"  [(ngModel)]="newPatientEmail" placeholder="Patient Email" autocomplete="off">
+<br><br>
+<input  type="text"  [(ngModel)]="newPatientDoctorId" placeholder="Assigned Doctor ID" autocomplete="off">
+<br><br>
+
+
+
+
+<button (click) = "addPatient()">Add Patient</button>
+
+<button (click) = "updatePatient()">Update Patient</button>
+<br><br><br>
+<h2>Create Doctor's Patient Directly (Doctor's ID Required, Assigned Doctor ID not required)</h2>
+<button (click) = "addDoctorsPatient()">Add Doctor's Patient</button>
+<button (click) = "updateDoctorsPatient()">Update Doctor's Patient</button>
+-->
